@@ -1,7 +1,7 @@
 import minecraft_launcher_lib
 import subprocess
 
-version = 'rd-132328'
+version = '1.7.10'
 username = 'Vais55'
 directory = '.launcher'
 
