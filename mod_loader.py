@@ -1,10 +1,3 @@
-# import curseforge
-#
-# client = curseforge.CurseClient()
-#
-# minecraft = client.game(432)
-# для curseforge
-
 import requests
 from bs4 import BeautifulSoup
 
