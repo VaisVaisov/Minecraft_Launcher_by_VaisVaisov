@@ -8,9 +8,13 @@
 import requests
 from bs4 import BeautifulSoup
 
-modrinth = requests.get('https://modrinth.com/mod/create')
-print(modrinth.status_code)
+mod = 'TerraFirmaCraft'
+version = '1.20.1'
 
-modrinth_source = modrinth.text
+modrinth_mod = requests.get(f'https://modrinth.com/mod/{mod.lower()}/versions')
+print(modrinth_mod.status_code)
 
-modrinth_soup = BeautifulSoup(modrinth_source, 'html.parser')
+modrinth_mod_soup = BeautifulSoup(modrinth_mod.text, 'html.parser')
+
+print(*modrinth_mod_soup.find('div', class_='version__supports').find('span'))
+#посмотреть, как забрать версию из тега span
