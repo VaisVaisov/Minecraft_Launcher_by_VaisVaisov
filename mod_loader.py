@@ -42,7 +42,8 @@ def get_project_files(project_id, download_optional_dependencies_flag, game_vers
 def download_project_files(project_file, project_file_name):
     with open(f'{project_file_name}', 'wb') as file:
         file.write(project_file)
-    print(f'Downloaded and installed {project_file_name}')
+    print(f'Downloading and installing {project_file_name}')
+    exit(0)
 
 
 def download_dependencies(project_dependencies, download_optional_dependencies_flag, game_version):
