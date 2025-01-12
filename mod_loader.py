@@ -68,12 +68,11 @@ def search_project(project_name, loader, game_version, download_optional_depende
         if search_json[search_result]['title'] == project_name:
             project_id = search_json[search_result]['project_id']
             break
+    get_project_files(project_id, download_optional_dependencies_flag, game_version)
 
     if project_id == '':
         print(f'Project {project_name} not found.')
         exit(1)
-
-    get_project_files(project_id, download_optional_dependencies_flag, game_version)
 
 
 def main():
