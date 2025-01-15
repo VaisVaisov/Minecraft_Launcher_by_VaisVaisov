@@ -2,6 +2,7 @@ import requests
 import json
 import os
 
+os.chdir('.launcher')
 
 def check_directory():
     if not os.path.isdir('mods'):
@@ -81,11 +82,7 @@ def main():
     check_directory()
     project_name = input('Enter the project name: ')
     game_version = input('Enter the game version: ')
-    download_optional_dependencies_flag = input('Do you want to download optional dependencies? (y/n): ')
-    if download_optional_dependencies_flag == 'y':
-        download_optional_dependencies_flag = True
-    else:
-        download_optional_dependencies_flag = False
+    download_optional_dependencies_flag = True if input('Do you want to download optional dependencies? (y/n): ') else download_optional_dependencies_flag = False
     loader = input('Enter the loader (Forge, Fabric, etc): ').lower()
     search_project(project_name, loader, game_version, download_optional_dependencies_flag)
 
