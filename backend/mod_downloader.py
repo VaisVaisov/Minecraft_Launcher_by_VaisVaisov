@@ -88,7 +88,7 @@ def search_project(project_name, loader, game_version, download_optional_depende
     get_project_files(project_id, download_optional_dependencies_flag, game_version)
 
 
-def main():
+def start_mod_downloader():
     check_directory()
     project_name = input('Enter the project name: ')
     game_version = input('Enter the game version: ')
@@ -98,8 +98,3 @@ def main():
     else:
         download_optional_dependencies_flag = False    
     search_project(project_name, loader, game_version, download_optional_dependencies_flag)
-
-
-if __name__ == '__main__':
-    main()
-    exit(0)
