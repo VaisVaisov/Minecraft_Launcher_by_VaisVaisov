@@ -82,7 +82,7 @@ def main():
     check_directory()
     project_name = input('Enter the project name: ')
     game_version = input('Enter the game version: ')
-    download_optional_dependencies_flag = True if input('Do you want to download optional dependencies? (y/n): ') else download_optional_dependencies_flag = False
+    download_optional_dependencies_flag = True if input('Do you want to download optional dependencies? (y/n): ') else False
     loader = input('Enter the loader (Forge, Fabric, etc): ').lower()
     search_project(project_name, loader, game_version, download_optional_dependencies_flag)
 

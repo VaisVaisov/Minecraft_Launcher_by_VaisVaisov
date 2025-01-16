@@ -1,8 +1,14 @@
 import minecraft_launcher_lib
 import subprocess
+import os
 
-version = '1.12.2'
-username = 'Vais55'
+import minecraft_launcher_lib.install
+
+version = input('Which Minecraft version you desire to download? (e.g. 1.12.2): ')
+username = input('Which your username? ')
+
+if not os.path.isdir('.launcher'):
+    os.mkdir('.launcher')
 directory = '.launcher'
 
 options = {
@@ -12,18 +18,33 @@ options = {
 }
 
 
-def forge_install():
-    forge_version = minecraft_launcher_lib.forge.find_forge_version(vanilla_version=version)
-    minecraft_launcher_lib.forge.forge_to_installed_version(forge_version=forge_version)
+def forge_install(version, directory):
+    forge_version = minecraft_launcher_lib.forge.find_forge_version(version)
+    minecraft_launcher_lib.install.install_minecraft_version(versionid=version, minecraft_directory=directory)
+    minecraft_launcher_lib.forge.install_forge_version(forge_version, directory)
+    subprocess.call(minecraft_launcher_lib.command.get_minecraft_command(version="1.12.2-forge-14.23.5.2860", minecraft_directory=directory, options=options))
 
+def fabric_install(version, directory):
+    minecraft_launcher_lib.fabric.install_fabric(minecraft_version=version, minecraft_directory=directory)
+    subprocess.call(minecraft_launcher_lib.command.get_minecraft_command(version=version, minecraft_directory=directory, options=options))
+
+
+def vanilla_install(version, directory):
+    minecraft_launcher_lib.install.install_minecraft_version(versionid=version, minecraft_directory=directory)
+    subprocess.call(minecraft_launcher_lib.command.get_minecraft_command(version=version, minecraft_directory=directory, options=options))
+   
 
 def launch():
-    minecraft_launcher_lib.install.install_minecraft_version(versionid=version, minecraft_directory=directory)
+    desired_loader = input('Which mod loader you desire to download? (Forge, Fabric, Vanilla): ').lower()    
+    match desired_loader:
+        case 'forge':
+            forge_install(version, directory)
+        case 'fabric':
+            fabric_install(version, directory)
+        case 'vanilla':
+            vanilla_install(version, directory)
 
-    if input('Would you like to install Forge? (y/n): ') == 'y':
-        forge_install()
 
-    subprocess.call(minecraft_launcher_lib.command.get_minecraft_command(version=version, minecraft_directory=directory, options=options))
 
 if __name__ == '__main__':
     launch()
