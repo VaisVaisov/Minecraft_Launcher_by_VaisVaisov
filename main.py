@@ -20,9 +20,9 @@ options = {
 
 def forge_install(version, directory):
     forge_version = minecraft_launcher_lib.forge.find_forge_version(version)
-    minecraft_launcher_lib.install.install_minecraft_version(versionid=version, minecraft_directory=directory)
     minecraft_launcher_lib.forge.install_forge_version(forge_version, directory)
-    subprocess.call(minecraft_launcher_lib.command.get_minecraft_command(version="1.12.2-forge-14.23.5.2860", minecraft_directory=directory, options=options))
+    forge_version = version + '-forge' + forge_version[forge_version.find('-'):]
+    subprocess.call(minecraft_launcher_lib.command.get_minecraft_command(version=forge_version, minecraft_directory=directory, options=options))
 
 def fabric_install(version, directory):
     minecraft_launcher_lib.fabric.install_fabric(minecraft_version=version, minecraft_directory=directory)

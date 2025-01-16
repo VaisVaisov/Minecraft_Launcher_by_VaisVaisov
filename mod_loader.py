@@ -12,22 +12,33 @@ def check_directory():
         os.chdir('mods') 
 
 
-def get_project_files(project_name, project_id, download_optional_dependencies_flag, game_version):
+def get_project_files(project_id, download_optional_dependencies_flag, game_version):
     project = requests.get(f'https://api.modrinth.com/v2/project/{project_id}').text
     project_json = json.loads(project)
     project_versions = project_json['versions']
     project_versions_codes = []
     project_versions_numbers = []
     for project_version_code in project_versions:
-        version = requests.get(f'https://api.modrinth.com/v2/project/{project_id}/version/{project_version_code}').text
+            version = requests.get(f'https://api.modrinth.com/v2/project/{project_id}/version/{project_version_code}').text
+            version_json = json.loads(version)
+            if game_version in version_json['game_versions']:
+                project_versions_codes.append(project_version_code)
+                project_version = version_json['version_number']
+                project_versions_numbers.append(project_version)
+    project_versions = dict(zip(project_versions_numbers, project_versions_codes))
+    if input('Would you like to download latest version? (y/n): ').lower() == 'y':
+        latest_version_flag = True
+    else:
+        latest_version_flag = False
+    if latest_version_flag:
+        version = requests.get(f'https://api.modrinth.com/v2/project/{project_id}/version/{project_versions[project_versions_numbers[0]]}').text
         version_json = json.loads(version)
         if game_version in version_json['game_versions']:
-            project_versions_codes.append(project_version_code)
             project_version = version_json['version_number']
-            project_versions_numbers.append(project_version)
-    project_versions = dict(zip(project_versions_numbers, project_versions_codes))
-    print(*(list(project_versions.keys())))
-    desired_project_version = input('Enter the desired version from list above: ')
+            desired_project_version = project_version
+    else:
+        print(*(list(project_versions.keys())))
+        desired_project_version = input('Enter the desired version from list above: ')
     version = requests.get(
         f'https://api.modrinth.com/v2/project/{project_id}/version/{project_versions[desired_project_version]}').text
     version_json = json.loads(version)
@@ -44,7 +55,6 @@ def download_project_files(project_file, project_file_name):
     with open(f'{project_file_name}', 'wb') as file:
         file.write(project_file)
     print(f'Downloading and installing {project_file_name}')
-    exit(0)
 
 
 def download_dependencies(project_dependencies, download_optional_dependencies_flag, game_version):
@@ -75,17 +85,21 @@ def search_project(project_name, loader, game_version, download_optional_depende
         print(f'Project {project_name} not found.')
         exit(1)
 
-    get_project_files(project_name, project_id, download_optional_dependencies_flag, game_version)
+    get_project_files(project_id, download_optional_dependencies_flag, game_version)
 
 
 def main():
     check_directory()
     project_name = input('Enter the project name: ')
     game_version = input('Enter the game version: ')
-    download_optional_dependencies_flag = True if input('Do you want to download optional dependencies? (y/n): ') else False
     loader = input('Enter the loader (Forge, Fabric, etc): ').lower()
+    if input('Would you like to download optional dependencies? (y/n): ').lower() == 'y':
+        download_optional_dependencies_flag = True
+    else:
+        download_optional_dependencies_flag = False    
     search_project(project_name, loader, game_version, download_optional_dependencies_flag)
 
 
 if __name__ == '__main__':
     main()
+    exit(0)
