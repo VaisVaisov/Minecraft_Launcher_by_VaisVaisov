@@ -2,14 +2,13 @@ import requests
 import json
 import os
 
-os.chdir('.launcher')
 
-def check_directory():
+def check_directory_mods():
     if not os.path.isdir('mods'):
         os.mkdir('mods')
         os.chdir('mods')
     else:
-        os.chdir('mods') 
+        os.chdir('mods')
 
 
 def get_project_files(project_id, download_optional_dependencies_flag, game_version):
@@ -89,7 +88,7 @@ def search_project(project_name, loader, game_version, download_optional_depende
 
 
 def start_mod_downloader():
-    check_directory()
+    check_directory_mods()
     project_name = input('Enter the project name: ')
     game_version = input('Enter the game version: ')
     loader = input('Enter the loader (Forge, Fabric, etc): ').lower()
