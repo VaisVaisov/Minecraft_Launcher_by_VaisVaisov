@@ -1,6 +1,4 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication
-import sys
 from minecraft_launcher_lib.utils import get_version_list
 
 
