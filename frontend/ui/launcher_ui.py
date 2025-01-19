@@ -147,3 +147,6 @@ class Ui_MainWindow(object):
 
     def update_status(self, status):
         self.launch_status.setText(status)
+
+    def update_max_progress(self, max_progress):
+        self.loading_progressbar.setMaximum(max_progress)

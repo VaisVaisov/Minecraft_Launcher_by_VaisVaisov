@@ -3,31 +3,11 @@ import subprocess
 import os
 from frontend.ui.launcher_ui import Ui_MainWindow
 
-current_max = 0
 
 
-def set_status(status):
-    print(status)
-    Ui_MainWindow.update_status(status=status)
 
+def install_loader(version, directory, loader, callback):
 
-def set_progress(progress):
-    if current_max != 0:
-        print(f'Progress: {progress}/{current_max}')
-        Ui_MainWindow.update_progress(progress=progress)
-
-
-def set_max(new_max):
-    global current_max
-    current_max = new_max
-
-
-def install_loader(version, directory, loader):
-    callback = {
-        'setStatus': set_status,
-        'setProgress': set_progress,
-        'setMax': set_max
-    }
     match loader:
         case 'forge':
             minecraft_launcher_lib.install.install_minecraft_version(versionid=version,
