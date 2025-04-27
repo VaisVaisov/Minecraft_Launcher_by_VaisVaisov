@@ -123,30 +123,4 @@ class Ui_MainWindow(object):
             self.minecraft_directory_field.setText(directory)
 
     def get_username(self):
-        return self.username_field.text()
-
-    def get_current_version(self):
-        return self.version_list.currentText()
-
-    def get_current_mod_loader(self):
-        if self.forge_flag.isEnabled():
-            return 'forge'
-        elif self.fabric_flag.isEnabled():
-            return 'fabric'
-        elif self.vanilla_flag.isEnabled():
-            return 'vanilla'
-
-    def get_minecraft_directory(self):
-        if self.standard_directory_flag.isChecked():
-            return utils.get_minecraft_directory()
-        else:
-            return self.minecraft_directory_field.text()
-
-    def update_progress(self, progress):
-        self.loading_progressbar.setValue(progress)
-
-    def update_status(self, status):
-        self.launch_status.setText(status)
-
-    def update_max_progress(self, max_progress):
-        self.loading_progressbar.setMaximum(max_progress)
+        return self.username_field
